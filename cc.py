@@ -113,7 +113,13 @@ if path.isfile(configPath):
 
 ############## Main ###############
 
-args = ["./bin/wso2server.sh"] + sys.argv[1:]
+startupScript = "./bin/wso2server.sh"
+
+# If this is a C5 server
+if not path.isfile(startupScript):
+    startupScript = "./bin/carbon.sh"
+
+args = [startupScript] + sys.argv[1:]
 process = subprocess.Popen(args, stdout=subprocess.PIPE)
 for line in iter(process.stdout.readline, ''):
     processLine(line)
